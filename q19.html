@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 19 - Even & Odd Range Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .number-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .num-pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: monospace;
+    }
+    .num-even {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+    .num-odd {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 19: Even & Odd Range Extractor</h1>
+      <p>Display all even and odd numbers within a specified range using loops and DOM manipulation.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Define Range</h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="start-range">Start Range (Min):</label>
+          <input type="number" id="start-range" class="form-control" value="1" oninput="generateRange()">
+        </div>
+        <div class="form-group">
+          <label for="end-range">End Range (Max):</label>
+          <input type="number" id="end-range" class="form-control" value="25" oninput="generateRange()">
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 1rem;">
+        <!-- Even Numbers Output -->
+        <div class="result-box" style="margin-top: 0;">
+          <h3>Even Numbers (<span id="even-count">0</span>)</h3>
+          <div id="even-list" class="number-grid"></div>
+        </div>
+
+        <!-- Odd Numbers Output -->
+        <div class="result-box" style="margin-top: 0; border-left-color: var(--warning);">
+          <h3>Odd Numbers (<span id="odd-count">0</span>)</h3>
+          <div id="odd-list" class="number-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateRange() {
+      const start = parseInt(document.getElementById('start-range').value, 10);
+      const end = parseInt(document.getElementById('end-range').value, 10);
+
+      const evenList = document.getElementById('even-list');
+      const oddList = document.getElementById('odd-list');
+      const evenCount = document.getElementById('even-count');
+      const oddCount = document.getElementById('odd-count');
+
+      if (isNaN(start) || isNaN(end) || start > end) {
+        evenList.innerHTML = "<p style='color:var(--text-muted)'>Invalid range</p>";
+        oddList.innerHTML = "<p style='color:var(--text-muted)'>Invalid range</p>";
+        evenCount.innerText = 0;
+        oddCount.innerText = 0;
+        return;
+      }
+
+      let evenHTML = "";
+      let oddHTML = "";
+      let evens = 0;
+      let odds = 0;
+
+      // Loop over the specified range
+      for (let i = start; i <= end; i++) {
+        if (i % 2 === 0) {
+          evenHTML += `<span class="num-pill num-even">${i}</span>`;
+          evens++;
+        } else {
+          oddHTML += `<span class="num-pill num-odd">${i}</span>`;
+          odds++;
+        }
+      }
+
+      // DOM updates
+      evenList.innerHTML = evenHTML || "<p style='color:var(--text-muted)'>None</p>";
+      oddList.innerHTML = oddHTML || "<p style='color:var(--text-muted)'>None</p>";
+      evenCount.innerText = evens;
+      oddCount.innerText = odds;
+    }
+
+    generateRange();
+  </script>
+</body>
+</html>

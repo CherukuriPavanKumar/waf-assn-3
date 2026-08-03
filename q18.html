@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 18 - Interactive Counter</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .counter-display {
+      font-size: 4.5rem;
+      font-weight: 800;
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #38bdf8;
+      transition: color 0.2s ease, transform 0.1s ease;
+      font-family: monospace;
+    }
+    .btn-counter-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-counter {
+      min-width: 110px;
+      font-size: 1.1rem;
+      padding: 0.8rem 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 18: Interactive Counter Widget</h1>
+      <p>Create a counter with Increment (+), Decrement (-), and Reset buttons using functions & DOM manipulation.</p>
+    </header>
+
+    <div class="card" style="text-align: center;">
+      <h2 class="card-title">Counter Value</h2>
+      
+      <div id="counter" class="counter-display">0</div>
+
+      <div class="btn-counter-group">
+        <button onclick="decrement()" class="btn btn-danger btn-counter">&minus; Decrement</button>
+        <button onclick="resetCounter()" class="btn btn-secondary btn-counter">&#8634; Reset</button>
+        <button onclick="increment()" class="btn btn-success btn-counter">&#43; Increment</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State variable
+    let count = 0;
+    const counterElement = document.getElementById('counter');
+
+    // DOM update helper function
+    function updateCounterDOM() {
+      counterElement.innerText = count;
+
+      // Dynamic styling based on counter value
+      if (count > 0) {
+        counterElement.style.color = "#10b981"; // Success green
+      } else if (count < 0) {
+        counterElement.style.color = "#ef4444"; // Danger red
+      } else {
+        counterElement.style.color = "#38bdf8"; // Default cyan
+      }
+    }
+
+    // Function 1: Increment
+    function increment() {
+      count++;
+      updateCounterDOM();
+    }
+
+    // Function 2: Decrement
+    function decrement() {
+      count--;
+      updateCounterDOM();
+    }
+
+    // Function 3: Reset
+    function resetCounter() {
+      count = 0;
+      updateCounterDOM();
+    }
+
+    updateCounterDOM();
+  </script>
+</body>
+</html>

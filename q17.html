@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 17 - Form Input Display (DOM)</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .display-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .field-row {
+      display: flex;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 0.4rem;
+    }
+    .field-label {
+      width: 140px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .field-value {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 17: Dynamic Form Data Renderer</h1>
+      <p>Accept user input through HTML form elements and display the entered information dynamically using the DOM.</p>
+    </header>
+
+    <div class="grid-2">
+      <!-- Input Form Card -->
+      <div class="card">
+        <h2 class="card-title">Registration Form</h2>
+        <form id="userForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" class="form-control" placeholder="e.g. Pavan Kumar" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" class="form-control" placeholder="pavan@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" class="form-control">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Subscribed Topics:</label>
+            <div style="display: flex; gap: 1rem; margin-top: 0.3rem;">
+              <label><input type="checkbox" name="topic" value="JavaScript"> JavaScript</label>
+              <label><input type="checkbox" name="topic" value="CSS Frameworks" checked> CSS</label>
+              <label><input type="checkbox" name="topic" value="Backend API" checked> APIs</label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" style="width: 100%;">Submit & Render DOM</button>
+        </form>
+      </div>
+
+      <!-- DOM Display Output -->
+      <div class="card">
+        <h2 class="card-title">Submitted Profile Preview</h2>
+        <div id="outputContainer">
+          <p style="color: var(--text-muted);">Fill in the form on the left and submit to see live dynamic DOM rendering.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Prevent page refresh
+
+      // 1. Extract inputs
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const gender = document.getElementById('gender').value;
+
+      const selectedTopics = Array.from(document.querySelectorAll('input[name="topic"]:checked'))
+                                  .map(cb => cb.value);
+
+      // 2. DOM manipulation to dynamically create display structure
+      const container = document.getElementById('outputContainer');
+      
+      container.innerHTML = `
+        <div class="display-card">
+          <div class="field-row">
+            <div class="field-label">Full Name:</div>
+            <div class="field-value">${fullName}</div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Email:</div>
+            <div class="field-value">${email}</div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Gender:</div>
+            <div class="field-value"><span class="badge">${gender}</span></div>
+          </div>
+          <div class="field-row" style="border-bottom: none;">
+            <div class="field-label">Topics:</div>
+            <div class="field-value">${selectedTopics.length > 0 ? selectedTopics.join(', ') : 'None'}</div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

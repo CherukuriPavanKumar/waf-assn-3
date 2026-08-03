@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 9 - Sum of First N Natural Numbers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 9: Sum of First N Natural Numbers</h1>
+      <p>Calculate 1 + 2 + 3 + ... + N using a loop.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Natural Number Range</h2>
+      <div class="form-group">
+        <label for="n-val">Enter N (N &ge; 1):</label>
+        <input type="number" id="n-val" class="form-control" value="50" min="1" oninput="calculateSum()">
+      </div>
+
+      <div class="result-box">
+        <h3>Sum Result</h3>
+        <p><strong>Sum:</strong> <span id="sum-res" class="result-value">1275</span></p>
+        <p style="margin-top: 0.5rem; color: var(--text-muted);" id="formula-check">Verification formula N(N+1)/2: 50 &times; 51 / 2 = 1275</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculateSum() {
+      const val = document.getElementById('n-val').value;
+      const resVal = document.getElementById('sum-res');
+      const formulaVal = document.getElementById('formula-check');
+
+      if (val === "") {
+        resVal.innerText = "-";
+        formulaVal.innerText = "";
+        return;
+      }
+
+      const n = parseInt(val, 10);
+      if (isNaN(n) || n < 1) {
+        resVal.innerText = "Please enter a positive integer N >= 1.";
+        formulaVal.innerText = "";
+        return;
+      }
+
+      // Loop calculation
+      let sum = 0;
+      for (let i = 1; i <= n; i++) {
+        sum += i;
+      }
+
+      resVal.innerText = sum;
+      
+      const formulaRes = (n * (n + 1)) / 2;
+      formulaVal.innerText = `Formula Check: ${n} \u00D7 (${n} + 1) / 2 = ${formulaRes}`;
+    }
+
+    calculateSum();
+  </script>
+</body>
+</html>

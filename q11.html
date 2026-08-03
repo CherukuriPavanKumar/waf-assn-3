@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 11 - Count Digits in Integer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 11: Count Digits (While Loop)</h1>
+      <p>Count the number of digits in a given integer using a while loop.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Integer Input</h2>
+      <div class="form-group">
+        <label for="digit-input">Enter Integer:</label>
+        <input type="number" id="digit-input" class="form-control" value="987654" oninput="countDigits()">
+      </div>
+
+      <div class="result-box">
+        <h3>Total Digits</h3>
+        <div id="digit-res" class="result-value">6 digits</div>
+        <p style="margin-top: 0.5rem; color: var(--text-muted);" id="digit-steps"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function countDigits() {
+      const val = document.getElementById('digit-input').value;
+      const resVal = document.getElementById('digit-res');
+      const stepsVal = document.getElementById('digit-steps');
+
+      if (val === "") {
+        resVal.innerText = "-";
+        stepsVal.innerText = "";
+        return;
+      }
+
+      let num = Math.abs(parseInt(val, 10));
+      if (isNaN(num)) {
+        resVal.innerText = "Invalid Integer";
+        stepsVal.innerText = "";
+        return;
+      }
+
+      // Handle 0 special case
+      if (num === 0) {
+        resVal.innerText = "1 digit";
+        stepsVal.innerText = "Number 0 has exactly 1 digit.";
+        return;
+      }
+
+      let count = 0;
+      let temp = num;
+      
+      // while loop counting algorithm
+      while (temp > 0) {
+        temp = Math.floor(temp / 10);
+        count++;
+      }
+
+      resVal.innerText = `${count} digit${count > 1 ? 's' : ''}`;
+      stepsVal.innerText = `Original value: ${num} | Counted via Math.floor(n / 10) while loop iterations: ${count}`;
+    }
+
+    countDigits();
+  </script>
+</body>
+</html>

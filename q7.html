@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 7 - Factorial Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 7: Factorial Calculator</h1>
+      <p>Calculate the factorial of a given non-negative integer using a loop.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Factorial Calculation</h2>
+      <div class="form-group">
+        <label for="fact-input">Enter Integer (N &ge; 0):</label>
+        <input type="number" id="fact-input" class="form-control" value="6" min="0" max="170" oninput="calculateFactorial()">
+      </div>
+
+      <div class="result-box">
+        <h3>Factorial Result</h3>
+        <p><strong>Factorial:</strong> <span id="fact-res" class="result-value">720</span></p>
+        <p style="margin-top: 0.5rem; color: var(--text-muted);" id="fact-steps">6! = 6 &times; 5 &times; 4 &times; 3 &times; 2 &times; 1 = 720</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculateFactorial() {
+      const val = document.getElementById('fact-input').value;
+      const resVal = document.getElementById('fact-res');
+      const stepsVal = document.getElementById('fact-steps');
+
+      if (val === "") {
+        resVal.innerText = "-";
+        stepsVal.innerText = "";
+        return;
+      }
+
+      const num = parseInt(val, 10);
+      if (isNaN(num) || num < 0) {
+        resVal.innerText = "Error: Please enter a non-negative integer.";
+        stepsVal.innerText = "";
+        return;
+      }
+
+      // Loop calculation
+      let fact = 1;
+      let stepsArray = [];
+      
+      for (let i = num; i >= 1; i--) {
+        fact *= i;
+        if (num <= 15) {
+          stepsArray.push(i);
+        }
+      }
+
+      resVal.innerText = fact;
+
+      if (num === 0 || num === 1) {
+        stepsVal.innerText = `${num}! = 1`;
+      } else if (num <= 15) {
+        stepsVal.innerText = `${num}! = ${stepsArray.join(' \u00D7 ')} = ${fact}`;
+      } else {
+        stepsVal.innerText = `${num}! = ${fact.toExponential(4)}`;
+      }
+    }
+
+    calculateFactorial();
+  </script>
+</body>
+</html>

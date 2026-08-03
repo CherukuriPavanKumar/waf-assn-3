@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 20 - Mini Web Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .calc-wrapper {
+      max-width: 340px;
+      margin: 0 auto;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .calc-screen {
+      background: #020617;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: right;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .calc-history {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      min-height: 1.2rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .calc-main {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      font-family: monospace;
+      min-height: 2.8rem;
+      word-break: break-all;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+    .btn-calc {
+      padding: 0.9rem 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-radius: 10px;
+      background: rgba(30, 41, 59, 0.9);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .btn-calc:hover {
+      background: rgba(51, 65, 85, 1);
+      transform: translateY(-2px);
+    }
+    .btn-calc:active {
+      transform: translateY(0);
+    }
+    .btn-op {
+      background: rgba(99, 102, 241, 0.25);
+      color: #818cf8;
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+    .btn-op:hover {
+      background: rgba(99, 102, 241, 0.4);
+    }
+    .btn-clear {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+    .btn-clear:hover {
+      background: rgba(239, 68, 68, 0.35);
+    }
+    .btn-equal {
+      background: var(--accent);
+      color: white;
+      grid-column: span 2;
+    }
+    .btn-equal:hover {
+      background: var(--accent-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 20: Mini Web Calculator</h1>
+      <p>Build a mini web-based calculator performing basic arithmetic operations using JS functions, event handling, and DOM manipulation.</p>
+    </header>
+
+    <div class="calc-wrapper">
+      <div class="calc-screen">
+        <div id="calc-expression" class="calc-history"></div>
+        <div id="calc-display" class="calc-main">0</div>
+      </div>
+
+      <div class="calc-grid">
+        <button class="btn-calc btn-clear" onclick="clearCalculator()">C</button>
+        <button class="btn-calc btn-clear" onclick="deleteChar()">&larr;</button>
+        <button class="btn-calc btn-op" onclick="appendOp('%')">%</button>
+        <button class="btn-calc btn-op" onclick="appendOp('/')">&divide;</button>
+
+        <button class="btn-calc" onclick="appendNum('7')">7</button>
+        <button class="btn-calc" onclick="appendNum('8')">8</button>
+        <button class="btn-calc" onclick="appendNum('9')">9</button>
+        <button class="btn-calc btn-op" onclick="appendOp('*')">&times;</button>
+
+        <button class="btn-calc" onclick="appendNum('4')">4</button>
+        <button class="btn-calc" onclick="appendNum('5')">5</button>
+        <button class="btn-calc" onclick="appendNum('6')">6</button>
+        <button class="btn-calc btn-op" onclick="appendOp('-')">&minus;</button>
+
+        <button class="btn-calc" onclick="appendNum('1')">1</button>
+        <button class="btn-calc" onclick="appendNum('2')">2</button>
+        <button class="btn-calc" onclick="appendNum('3')">3</button>
+        <button class="btn-calc btn-op" onclick="appendOp('+')">&#43;</button>
+
+        <button class="btn-calc" onclick="appendNum('0')">0</button>
+        <button class="btn-calc" onclick="appendNum('.')">.</button>
+        <button class="btn-calc btn-equal" onclick="computeResult()">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State variables
+    let currentInput = "0";
+    let expression = "";
+    let shouldResetDisplay = false;
+
+    const displayElement = document.getElementById('calc-display');
+    const expressionElement = document.getElementById('calc-expression');
+
+    // Helper DOM update function
+    function updateDisplay() {
+      displayElement.innerText = currentInput;
+      expressionElement.innerText = expression;
+    }
+
+    // Number button click handler
+    function appendNum(num) {
+      if (currentInput === "0" || shouldResetDisplay) {
+        currentInput = num;
+        shouldResetDisplay = false;
+      } else {
+        // Prevent duplicate decimal points
+        if (num === '.' && currentInput.includes('.')) return;
+        currentInput += num;
+      }
+      updateDisplay();
+    }
+
+    // Operator button click handler
+    function appendOp(op) {
+      if (shouldResetDisplay) shouldResetDisplay = false;
+      
+      const lastChar = expression.slice(-1);
+      if (['+', '-', '*', '/', '%'].includes(lastChar) && currentInput === "") {
+        expression = expression.slice(0, -1) + op;
+      } else {
+        expression += currentInput + " " + op + " ";
+      }
+      currentInput = "0";
+      shouldResetDisplay = true;
+      updateDisplay();
+    }
+
+    // Clear function
+    function clearCalculator() {
+      currentInput = "0";
+      expression = "";
+      shouldResetDisplay = false;
+      updateDisplay();
+    }
+
+    // Delete single character (Backspace)
+    function deleteChar() {
+      if (currentInput.length === 1 || currentInput === "0") {
+        currentInput = "0";
+      } else {
+        currentInput = currentInput.slice(0, -1);
+      }
+      updateDisplay();
+    }
+
+    // Basic arithmetic computation logic
+    function computeResult() {
+      if (expression === "") return;
+
+      const fullExpr = expression + currentInput;
+      try {
+        // Evaluate expression safely
+        let result = Function('"use strict"; return (' + fullExpr + ')')();
+        
+        if (!isFinite(result)) {
+          currentInput = "Error";
+        } else {
+          // Format result cleanly
+          currentInput = String(Number(result.toFixed(6)));
+        }
+
+        expression = fullExpr + " =";
+        shouldResetDisplay = true;
+      } catch (err) {
+        currentInput = "Error";
+        expression = "";
+        shouldResetDisplay = true;
+      }
+      updateDisplay();
+    }
+
+    // Keyboard support event handling
+    document.addEventListener('keydown', (e) => {
+      if (e.key >= '0' && e.key <= '9') appendNum(e.key);
+      else if (e.key === '.') appendNum('.');
+      else if (e.key === '+') appendOp('+');
+      else if (e.key === '-') appendOp('-');
+      else if (e.key === '*') appendOp('*');
+      else if (e.key === '/') appendOp('/');
+      else if (e.key === '%') appendOp('%');
+      else if (e.key === 'Enter' || e.key === '=') computeResult();
+      else if (e.key === 'Backspace') deleteChar();
+      else if (e.key === 'Escape') clearCalculator();
+    });
+  </script>
+</body>
+</html>

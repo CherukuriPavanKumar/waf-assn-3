@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 3 - Rectangle Area and Perimeter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 3: Rectangle Calculator</h1>
+      <p>Calculate area and perimeter of a rectangle using JavaScript functions.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Rectangle Dimensions</h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="length">Length (L):</label>
+          <input type="number" id="length" class="form-control" value="12" min="0" step="any">
+        </div>
+        <div class="form-group">
+          <label for="width">Width (W):</label>
+          <input type="number" id="width" class="form-control" value="8" min="0" step="any">
+        </div>
+      </div>
+      <button onclick="computeRectangle()" class="btn" style="width: 100%;">Calculate</button>
+
+      <div class="result-box">
+        <h3>Calculated Results</h3>
+        <p><strong>Area (L &times; W):</strong> <span id="area-val" class="result-value">96</span> sq units</p>
+        <p style="margin-top: 0.5rem;"><strong>Perimeter (2 &times; (L + W)):</strong> <span id="peri-val" class="result-value">40</span> units</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to calculate rectangle area
+    function calcArea(length, width) {
+      return length * width;
+    }
+
+    // Function to calculate rectangle perimeter
+    function calcPerimeter(length, width) {
+      return 2 * (length + width);
+    }
+
+    function computeRectangle() {
+      const l = parseFloat(document.getElementById('length').value) || 0;
+      const w = parseFloat(document.getElementById('width').value) || 0;
+
+      const area = calcArea(l, w);
+      const perimeter = calcPerimeter(l, w);
+
+      document.getElementById('area-val').innerText = area;
+      document.getElementById('peri-val').innerText = perimeter;
+    }
+
+    // Run on page load
+    computeRectangle();
+  </script>
+</body>
+</html>

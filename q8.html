@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 8 - Multiplication Table</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .table-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .table-item {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      text-align: center;
+      font-family: monospace;
+      font-size: 1rem;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 8: Multiplication Table Generator</h1>
+      <p>Generate the multiplication table of a given number using a for loop.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Table Controls</h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="table-num">Number:</label>
+          <input type="number" id="table-num" class="form-control" value="7" oninput="generateTable()">
+        </div>
+        <div class="form-group">
+          <label for="table-limit">Limit (up to):</label>
+          <input type="number" id="table-limit" class="form-control" value="10" min="1" max="50" oninput="generateTable()">
+        </div>
+      </div>
+
+      <div class="result-box">
+        <h3>Multiplication Table</h3>
+        <ul id="table-container" class="table-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateTable() {
+      const num = parseFloat(document.getElementById('table-num').value);
+      const limit = parseInt(document.getElementById('table-limit').value, 10);
+      const container = document.getElementById('table-container');
+
+      if (isNaN(num) || isNaN(limit) || limit < 1) {
+        container.innerHTML = "<li>Invalid input</li>";
+        return;
+      }
+
+      let html = "";
+      // using for loop
+      for (let i = 1; i <= limit; i++) {
+        const result = num * i;
+        html += `<li class="table-item">${num} &times; ${i} = ${result}</li>`;
+      }
+
+      container.innerHTML = html;
+    }
+
+    generateTable();
+  </script>
+</body>
+</html>

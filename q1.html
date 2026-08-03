@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 1 - Variables of Different Data Types</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .type-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .type-name {
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .type-val {
+      font-family: monospace;
+      color: #38bdf8;
+      background: rgba(0,0,0,0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 1: Data Types in JavaScript</h1>
+      <p>Declare variables of different data types and display their values and types on a web page.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Declared Variables Output</h2>
+      <div id="output"></div>
+    </div>
+  </div>
+
+  <script>
+    // 1. String
+    let strVar = "Hello Web Development!";
+    
+    // 2. Number
+    let numVar = 42.99;
+    
+    // 3. Boolean
+    let boolVar = true;
+    
+    // 4. Undefined
+    let undefVar;
+    
+    // 5. Null
+    let nullVar = null;
+    
+    // 6. BigInt
+    let bigIntVar = 9007199254740991n;
+    
+    // 7. Symbol
+    let symVar = Symbol("uniqueKey");
+    
+    // 8. Array (Object)
+    let arrVar = ["JavaScript", "HTML5", "CSS3"];
+    
+    // 9. Object
+    let objVar = { name: "Pavan", course: "WAF", year: 2026 };
+
+    // 10. Function
+    let funcVar = function() { return "I am a function"; };
+
+    const variables = [
+      { name: "strVar", value: JSON.stringify(strVar), type: typeof strVar },
+      { name: "numVar", value: numVar, type: typeof numVar },
+      { name: "boolVar", value: boolVar, type: typeof boolVar },
+      { name: "undefVar", value: String(undefVar), type: typeof undefVar },
+      { name: "nullVar", value: String(nullVar), type: typeof nullVar },
+      { name: "bigIntVar", value: bigIntVar.toString() + "n", type: typeof bigIntVar },
+      { name: "symVar", value: symVar.toString(), type: typeof symVar },
+      { name: "arrVar", value: JSON.stringify(arrVar), type: Array.isArray(arrVar) ? "Array (Object)" : typeof arrVar },
+      { name: "objVar", value: JSON.stringify(objVar), type: typeof objVar },
+      { name: "funcVar", value: funcVar.toString(), type: typeof funcVar }
+    ];
+
+    const outputContainer = document.getElementById("output");
+    outputContainer.innerHTML = variables.map(v => `
+      <div class="type-card">
+        <div>
+          <span class="badge">${v.type}</span>
+          <span class="type-name">let ${v.name}</span>
+        </div>
+        <div class="type-val">${v.value}</div>
+      </div>
+    `).join("");
+  </script>
+</body>
+</html>

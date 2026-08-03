@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 16 - Dynamic Background Color Changer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .color-swatch-container {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .swatch:hover {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body id="page-body">
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 16: Background Color Changer</h1>
+      <p>Change the background color of the web page dynamically when a button is clicked using DOM manipulation.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Color Control Panel</h2>
+      
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button id="bg-btn" onclick="changeRandomColor()" class="btn">Change Random Color</button>
+        <button onclick="resetBgColor()" class="btn btn-secondary">Reset Original Theme</button>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Or pick a preset color:</p>
+        <div class="color-swatch-container">
+          <div class="swatch" style="background: #1e1b4b;" onclick="setBg('#1e1b4b')"></div>
+          <div class="swatch" style="background: #064e3b;" onclick="setBg('#064e3b')"></div>
+          <div class="swatch" style="background: #701a75;" onclick="setBg('#701a75')"></div>
+          <div class="swatch" style="background: #7c2d12;" onclick="setBg('#7c2d12')"></div>
+          <div class="swatch" style="background: #0f172a;" onclick="setBg('#0f172a')"></div>
+        </div>
+      </div>
+
+      <div class="result-box">
+        <h3>Current Background Color</h3>
+        <p>Hex Code: <strong id="current-color-code" class="result-value">Default Theme (#0f172a)</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const body = document.getElementById('page-body');
+    const colorCodeText = document.getElementById('current-color-code');
+    const originalBg = body.style.backgroundColor;
+
+    // DOM Manipulation function for random background color
+    function changeRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      setBg(color);
+    }
+
+    function setBg(color) {
+      body.style.backgroundColor = color;
+      body.style.backgroundImage = 'none'; // Clear default gradient overlay for clean solid preview
+      colorCodeText.innerText = color;
+    }
+
+    function resetBgColor() {
+      body.style.backgroundColor = "";
+      body.style.backgroundImage = "";
+      colorCodeText.innerText = "Default Theme (#0f172a)";
+    }
+  </script>
+</body>
+</html>

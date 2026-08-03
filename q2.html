@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 2 - Arithmetic Functions</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .op-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .op-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .op-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .op-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 2: Basic Arithmetic Functions</h1>
+      <p>Perform addition, subtraction, multiplication, division, and modulus using JavaScript functions.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Enter Numbers</h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="num1">First Number (A):</label>
+          <input type="number" id="num1" class="form-control" value="20">
+        </div>
+        <div class="form-group">
+          <label for="num2">Second Number (B):</label>
+          <input type="number" id="num2" class="form-control" value="6">
+        </div>
+      </div>
+      <button onclick="calculateAll()" class="btn" style="width: 100%;">Calculate Results</button>
+
+      <div class="op-grid">
+        <div class="op-card">
+          <div class="op-title">Addition (+)</div>
+          <div id="add-res" class="op-value">-</div>
+        </div>
+        <div class="op-card">
+          <div class="op-title">Subtraction (-)</div>
+          <div id="sub-res" class="op-value">-</div>
+        </div>
+        <div class="op-card">
+          <div class="op-title">Multiplication (&times;)</div>
+          <div id="mul-res" class="op-value">-</div>
+        </div>
+        <div class="op-card">
+          <div class="op-title">Division (&divide;)</div>
+          <div id="div-res" class="op-value">-</div>
+        </div>
+        <div class="op-card">
+          <div class="op-title">Modulus (%)</div>
+          <div id="mod-res" class="op-value">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Functions for arithmetic operations
+    function add(a, b) { return a + b; }
+    function subtract(a, b) { return a - b; }
+    function multiply(a, b) { return a * b; }
+    function divide(a, b) { return b !== 0 ? (a / b).toFixed(2) : "Cannot divide by 0"; }
+    function modulus(a, b) { return b !== 0 ? a % b : "N/A"; }
+
+    function calculateAll() {
+      const a = parseFloat(document.getElementById('num1').value) || 0;
+      const b = parseFloat(document.getElementById('num2').value) || 0;
+
+      document.getElementById('add-res').innerText = add(a, b);
+      document.getElementById('sub-res').innerText = subtract(a, b);
+      document.getElementById('mul-res').innerText = multiply(a, b);
+      document.getElementById('div-res').innerText = divide(a, b);
+      document.getElementById('mod-res').innerText = modulus(a, b);
+    }
+
+    // Initial run on load
+    calculateAll();
+  </script>
+</body>
+</html>

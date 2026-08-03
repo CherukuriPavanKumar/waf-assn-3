@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF Lab Assignment 3 - JavaScript Solutions</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .q-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25 ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .q-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+    }
+    .q-num {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .q-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+    .q-btn {
+      align-self: flex-start;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>WAF Lab Assignment 3</h1>
+      <p>JavaScript & DOM Manipulation Solutions (Questions 1 - 20)</p>
+    </header>
+
+    <div class="grid-cards">
+      <a href="q1.html" class="q-card">
+        <div>
+          <div class="q-num">Question 1</div>
+          <div class="q-title">Variables & Data Types</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q2.html" class="q-card">
+        <div>
+          <div class="q-num">Question 2</div>
+          <div class="q-title">Basic Arithmetic Operations using Functions</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q3.html" class="q-card">
+        <div>
+          <div class="q-num">Question 3</div>
+          <div class="q-title">Area & Perimeter of a Rectangle</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q4.html" class="q-card">
+        <div>
+          <div class="q-num">Question 4</div>
+          <div class="q-title">Celsius & Fahrenheit Temperature Converter</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q5.html" class="q-card">
+        <div>
+          <div class="q-num">Question 5</div>
+          <div class="q-title">Even or Odd Number Checker</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q6.html" class="q-card">
+        <div>
+          <div class="q-num">Question 6</div>
+          <div class="q-title">Largest of Three Numbers</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q7.html" class="q-card">
+        <div>
+          <div class="q-num">Question 7</div>
+          <div class="q-title">Factorial Calculation using Loops</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q8.html" class="q-card">
+        <div>
+          <div class="q-num">Question 8</div>
+          <div class="q-title">Multiplication Table Generator</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q9.html" class="q-card">
+        <div>
+          <div class="q-num">Question 9</div>
+          <div class="q-title">Sum of First N Natural Numbers</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q10.html" class="q-card">
+        <div>
+          <div class="q-num">Question 10</div>
+          <div class="q-title">Prime Number Checker</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q11.html" class="q-card">
+        <div>
+          <div class="q-num">Question 11</div>
+          <div class="q-title">Count Digits in Integer (While Loop)</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q12.html" class="q-card">
+        <div>
+          <div class="q-num">Question 12</div>
+          <div class="q-title">Reverse Digits of a Number</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q13.html" class="q-card">
+        <div>
+          <div class="q-num">Question 13</div>
+          <div class="q-title">Simple Calculator using Switch Statement</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q14.html" class="q-card">
+        <div>
+          <div class="q-num">Question 14</div>
+          <div class="q-title">Student Total, Average, Percentage & Grade</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q15.html" class="q-card">
+        <div>
+          <div class="q-num">Question 15</div>
+          <div class="q-title">Dynamic HTML Text Manipulation (DOM)</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q16.html" class="q-card">
+        <div>
+          <div class="q-num">Question 16</div>
+          <div class="q-title">Dynamic Background Color Changer</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q17.html" class="q-card">
+        <div>
+          <div class="q-num">Question 17</div>
+          <div class="q-title">Form Input Dynamic DOM Display</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q18.html" class="q-card">
+        <div>
+          <div class="q-num">Question 18</div>
+          <div class="q-title">Interactive Counter (Increment, Decrement, Reset)</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q19.html" class="q-card">
+        <div>
+          <div class="q-num">Question 19</div>
+          <div class="q-title">Even & Odd Numbers in Specified Range</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+
+      <a href="q20.html" class="q-card">
+        <div>
+          <div class="q-num">Question 20</div>
+          <div class="q-title">Mini Web-Based Calculator</div>
+        </div>
+        <span class="btn q-btn">View Solution &rarr;</span>
+      </a>
+    </div>
+
+    <footer>
+      <p>Web Application Frameworks (WAF) Lab Assignment 3 Solutions</p>
+    </footer>
+  </div>
+</body>
+</html>

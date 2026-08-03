@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 15 - Dynamic HTML Text Manipulation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .demo-target {
+      padding: 1.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 2px dashed var(--accent);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #818cf8;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 15: Dynamic DOM Text Manipulation</h1>
+      <p>Change the text content of an HTML element dynamically using DOM manipulation methods.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">DOM Control Center</h2>
+      
+      <div class="form-group">
+        <label for="custom-text">Custom Text:</label>
+        <input type="text" id="custom-text" class="form-control" value="Welcome to Web Application Frameworks Lab!">
+      </div>
+
+      <div class="btn-group">
+        <button onclick="updateText()" class="btn">Update Element Text</button>
+        <button onclick="presetText(1)" class="btn btn-secondary">Preset 1: Hello World</button>
+        <button onclick="presetText(2)" class="btn btn-secondary">Preset 2: DOM Changed!</button>
+        <button onclick="resetText()" class="btn btn-secondary">Reset Original</button>
+      </div>
+
+      <div class="result-box">
+        <h3>Target DOM Element</h3>
+        <div id="target-heading" class="demo-target">Initial Placeholder Text</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const targetElement = document.getElementById('target-heading');
+    const originalText = targetElement.innerText;
+
+    // DOM Manipulation function
+    function updateText() {
+      const newText = document.getElementById('custom-text').value;
+      if (newText.trim() === "") {
+        alert("Please enter some text!");
+        return;
+      }
+      targetElement.innerText = newText;
+    }
+
+    function presetText(option) {
+      if (option === 1) {
+        document.getElementById('custom-text').value = "Hello World! JavaScript is Awesome.";
+      } else if (option === 2) {
+        document.getElementById('custom-text').value = "DOM Element Text Successfully Modified!";
+      }
+      updateText();
+    }
+
+    function resetText() {
+      document.getElementById('custom-text').value = originalText;
+      targetElement.innerText = originalText;
+    }
+  </script>
+</body>
+</html>

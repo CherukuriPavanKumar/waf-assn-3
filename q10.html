@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 10 - Prime Number Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 10: Prime Number Checker</h1>
+      <p>Check whether a given integer is a prime number using loops and conditional statements.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Number Input</h2>
+      <div class="form-group">
+        <label for="prime-input">Enter Integer:</label>
+        <input type="number" id="prime-input" class="form-control" value="29" oninput="checkPrime()">
+      </div>
+
+      <div class="result-box">
+        <h3>Analysis Result</h3>
+        <div id="prime-res" class="result-value">-</div>
+        <p style="margin-top: 0.5rem; color: var(--text-muted);" id="prime-reason"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function checkPrime() {
+      const val = document.getElementById('prime-input').value;
+      const resVal = document.getElementById('prime-res');
+      const reasonVal = document.getElementById('prime-reason');
+
+      if (val === "") {
+        resVal.innerText = "-";
+        reasonVal.innerText = "";
+        return;
+      }
+
+      const num = parseInt(val, 10);
+      if (isNaN(num)) {
+        resVal.innerText = "Invalid number";
+        reasonVal.innerText = "";
+        return;
+      }
+
+      if (num <= 1) {
+        resVal.innerHTML = `<span class="badge badge-warning">NOT PRIME</span> ${num} is NOT a prime number.`;
+        reasonVal.innerText = "Prime numbers must be integers strictly greater than 1.";
+        return;
+      }
+
+      let isPrime = true;
+      let divisor = null;
+
+      // Loop to check factors up to sqrt(num)
+      for (let i = 2; i * i <= num; i++) {
+        if (num % i === 0) {
+          isPrime = false;
+          divisor = i;
+          break;
+        }
+      }
+
+      if (isPrime) {
+        resVal.innerHTML = `<span class="badge badge-success">PRIME</span> ${num} IS a prime number!`;
+        reasonVal.innerText = `It has no divisors other than 1 and ${num}.`;
+      } else {
+        resVal.innerHTML = `<span class="badge badge-warning">NOT PRIME</span> ${num} is NOT a prime number.`;
+        reasonVal.innerText = `Divisible by ${divisor} (${divisor} \u00D7 ${num / divisor} = ${num}).`;
+      }
+    }
+
+    checkPrime();
+  </script>
+</body>
+</html>

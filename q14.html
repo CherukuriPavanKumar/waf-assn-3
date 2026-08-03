@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 14 - Student Grade & Marks Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .marks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 14: Student Grade & Performance Calculator</h1>
+      <p>Calculate Total Marks, Average, Percentage, and Letter Grade using JavaScript functions & conditional statements.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Subject Marks (Out of 100)</h2>
+      <div class="marks-grid">
+        <div class="form-group">
+          <label for="m1">Mathematics:</label>
+          <input type="number" id="m1" class="form-control" value="88" min="0" max="100" oninput="calculateGrade()">
+        </div>
+        <div class="form-group">
+          <label for="m2">Physics:</label>
+          <input type="number" id="m2" class="form-control" value="92" min="0" max="100" oninput="calculateGrade()">
+        </div>
+        <div class="form-group">
+          <label for="m3">Chemistry:</label>
+          <input type="number" id="m3" class="form-control" value="85" min="0" max="100" oninput="calculateGrade()">
+        </div>
+        <div class="form-group">
+          <label for="m4">Web Dev (WAF):</label>
+          <input type="number" id="m4" class="form-control" value="96" min="0" max="100" oninput="calculateGrade()">
+        </div>
+        <div class="form-group">
+          <label for="m5">English:</label>
+          <input type="number" id="m5" class="form-control" value="79" min="0" max="100" oninput="calculateGrade()">
+        </div>
+      </div>
+
+      <div class="result-box">
+        <h3>Performance Report</h3>
+        <p><strong>Total Marks:</strong> <span id="tot-val">0</span> / 500</p>
+        <p style="margin-top: 0.3rem;"><strong>Average Marks:</strong> <span id="avg-val">0</span></p>
+        <p style="margin-top: 0.3rem;"><strong>Percentage:</strong> <span id="pct-val">0%</span></p>
+        <p style="margin-top: 0.6rem;"><strong>Grade:</strong> <span id="grade-val" class="result-value">-</span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calcTotal(marks) {
+      return marks.reduce((sum, m) => sum + m, 0);
+    }
+
+    function calcAverage(total, count) {
+      return total / count;
+    }
+
+    function getGrade(percentage) {
+      // Conditional logic for letter grade
+      if (percentage >= 90) return { letter: "A+ (Outstanding)", color: "badge-success" };
+      if (percentage >= 80) return { letter: "A (Excellent)", color: "badge-success" };
+      if (percentage >= 70) return { letter: "B (Very Good)", color: "badge-success" };
+      if (percentage >= 60) return { letter: "C (Good)", color: "badge-warning" };
+      if (percentage >= 50) return { letter: "D (Satisfactory)", color: "badge-warning" };
+      if (percentage >= 40) return { letter: "E (Pass)", color: "badge-warning" };
+      return { letter: "F (Fail)", color: "badge-danger" };
+    }
+
+    function calculateGrade() {
+      const inputs = ['m1', 'm2', 'm3', 'm4', 'm5'];
+      const marks = inputs.map(id => parseFloat(document.getElementById(id).value) || 0);
+
+      const total = calcTotal(marks);
+      const average = calcAverage(total, marks.length);
+      const percentage = (total / (marks.length * 100)) * 100;
+
+      const gradeObj = getGrade(percentage);
+
+      document.getElementById('tot-val').innerText = total;
+      document.getElementById('avg-val').innerText = average.toFixed(2);
+      document.getElementById('pct-val').innerText = `${percentage.toFixed(2)}%`;
+      document.getElementById('grade-val').innerHTML = `<span class="badge ${gradeObj.color}">${gradeObj.letter}</span>`;
+    }
+
+    calculateGrade();
+  </script>
+</body>
+</html>
