@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 33 - mousemove Coordinate Display</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .tracking-area {
+      width: 100%;
+      height: 280px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px dashed var(--accent);
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .tracking-placeholder {
+      pointer-events: none;
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 1rem;
+      user-select: none;
+      z-index: 10;
+    }
+    .coordinate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .coord-card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .coord-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .coord-val {
+      font-size: 1.4rem;
+      font-weight: 700;
+      font-family: monospace;
+      color: var(--accent);
+    }
+    /* Dynamic cursor crosshairs */
+    .crosshair-h, .crosshair-v {
+      position: absolute;
+      background: rgba(99, 102, 241, 0.25);
+      pointer-events: none;
+      display: none;
+    }
+    .crosshair-h {
+      height: 1px;
+      width: 100%;
+      left: 0;
+    }
+    .crosshair-v {
+      width: 1px;
+      height: 100%;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 33: Mouse Coordinate Tracker</h1>
+      <p>Display the coordinates of the mouse pointer when the user moves the mouse over a &lt;div&gt; element using the mousemove event.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Move Cursor inside the Box</h2>
+      
+      <!-- Coordinate displays -->
+      <div class="coordinate-grid">
+        <div class="coord-card">
+          <div class="coord-title">Relative Coordinate (X, Y)</div>
+          <div id="relativeCoord" class="coord-val">X: 0, Y: 0</div>
+        </div>
+        <div class="coord-card">
+          <div class="coord-title">Screen Coordinate (X, Y)</div>
+          <div id="screenCoord" class="coord-val">X: 0, Y: 0</div>
+        </div>
+      </div>
+
+      <!-- Tracking Viewport Box -->
+      <div id="trackArea" class="tracking-area" onmousemove="trackMouse(event)" onmouseleave="resetTrack()" onmouseenter="showCrosshair()">
+        <div class="crosshair-h" id="crossH"></div>
+        <div class="crosshair-v" id="crossV"></div>
+        <div id="placeholderText" class="tracking-placeholder">
+          Move Mouse Inside This Zone<br>
+          <span style="font-size: 0.8rem; color: var(--accent);">&#10024; Tracking Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const trackArea = document.getElementById('trackArea');
+    const relativeDisplay = document.getElementById('relativeCoord');
+    const screenDisplay = document.getElementById('screenCoord');
+    const placeholder = document.getElementById('placeholderText');
+    const crossH = document.getElementById('crossH');
+    const crossV = document.getElementById('crossV');
+
+    function trackMouse(event) {
+      // 1. Get coordinates relative to the tracker div element
+      const rect = trackArea.getBoundingClientRect();
+      const relativeX = Math.round(event.clientX - rect.left);
+      const relativeY = Math.round(event.clientY - rect.top);
+
+      // 2. Get absolute screen coordinates
+      const screenX = Math.round(event.screenX);
+      const screenY = Math.round(event.screenY);
+
+      // 3. Update Text Content
+      relativeDisplay.innerText = `X: ${relativeX}, Y: ${relativeY}`;
+      screenDisplay.innerText = `X: ${screenX}, Y: ${screenY}`;
+
+      // 4. Update crosshair positions
+      crossH.style.top = `${relativeY}px`;
+      crossV.style.left = `${relativeX}px`;
+
+      // Hide placeholder if coordinates are changing
+      placeholder.style.opacity = '0.35';
+    }
+
+    function showCrosshair() {
+      crossH.style.display = 'block';
+      crossV.style.display = 'block';
+    }
+
+    function resetTrack() {
+      relativeDisplay.innerText = `X: 0, Y: 0`;
+      screenDisplay.innerText = `X: 0, Y: 0`;
+      crossH.style.display = 'none';
+      crossV.style.display = 'none';
+      placeholder.style.opacity = '1';
+    }
+  </script>
+</body>
+</html>

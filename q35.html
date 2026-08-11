@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 35 - keydown Event Playground</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .keyboard-card {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .key-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .key-metric {
+      background: rgba(30, 41, 59, 0.6);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .key-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+    }
+    .key-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+    }
+    .status-banner {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      transition: all 0.15s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 35: Keyboard Event Inspector</h1>
+      <p>Display a message when a user presses a key in a text input field using the keydown event.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Keyboard Playground</h2>
+      <div class="form-group">
+        <label for="keyInput">Type here to test keydown events:</label>
+        <input type="text" id="keyInput" class="form-control" placeholder="Press any key..." onkeydown="handleKeyDown(event)">
+      </div>
+
+      <div class="keyboard-card">
+        <div id="statusBanner" class="status-banner" style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted);">
+          Waiting for key press input...
+        </div>
+
+        <div class="key-metric-grid">
+          <div class="key-metric">
+            <div class="key-label">Key Property</div>
+            <div id="keyProp" class="key-val">-</div>
+          </div>
+          <div class="key-metric">
+            <div class="key-label">Key Code</div>
+            <div id="keyCode" class="key-val">-</div>
+          </div>
+          <div class="key-metric">
+            <div class="key-label">Modifier Keys</div>
+            <div id="keyModifiers" class="key-val" style="font-size: 1.05rem; line-height: 1.5rem; padding-top: 0.2rem;">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleKeyDown(event) {
+      const banner = document.getElementById('statusBanner');
+      const keyProp = document.getElementById('keyProp');
+      const keyCode = document.getElementById('keyCode');
+      const keyModifiers = document.getElementById('keyModifiers');
+
+      // 1. Update general alert status message
+      banner.style.background = 'rgba(99, 102, 241, 0.15)';
+      banner.style.color = 'var(--text-main)';
+      banner.innerHTML = `&#9000; Keydown event triggered for key: <strong>"${event.key}"</strong>`;
+
+      // 2. Format displays
+      keyProp.innerText = event.key === " " ? "Space" : event.key;
+      keyCode.innerText = event.code;
+
+      // 3. Modifiers check
+      let modifiers = [];
+      if (event.ctrlKey) modifiers.push("Ctrl");
+      if (event.shiftKey) modifiers.push("Shift");
+      if (event.altKey) modifiers.push("Alt");
+      if (event.metaKey) modifiers.push("Meta");
+
+      keyModifiers.innerText = modifiers.length > 0 ? modifiers.join(" + ") : "None";
+    }
+  </script>
+</body>
+</html>

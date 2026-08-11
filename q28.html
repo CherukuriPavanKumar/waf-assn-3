@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 28 - Username Validator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .counter-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 28: Username Validator</h1>
+      <p>Validate a username using a Regular Expression. The username must contain 5–15 characters and may contain alphabets, digits, and underscores only.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Choose Username</h2>
+      <div class="form-group">
+        <label for="usernameInput">Username:</label>
+        <input type="text" id="usernameInput" class="form-control" placeholder="e.g. coder_123" oninput="validateUsername()">
+        <div class="counter-info">
+          <span id="charCount">0 characters</span>
+          <span id="ruleText">Allowed: a-z, A-Z, 0-9, _ (5-15 chars)</span>
+        </div>
+      </div>
+      
+      <div id="resultBox" class="result-box" style="display: none; margin-top: 1rem;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateUsername() {
+      const username = document.getElementById('usernameInput').value;
+      const countEl = document.getElementById('charCount');
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      // Update character count
+      countEl.innerText = `${username.length} character${username.length !== 1 ? 's' : ''}`;
+      
+      // Username Regex: 5 to 15 chars, alphanumeric + underscore
+      const usernameRegex = /^[a-zA-Z0-9_]{5,15}$/;
+      
+      if (username === "") {
+        resultBox.style.display = 'none';
+        return;
+      }
+      
+      resultBox.style.display = 'block';
+      
+      if (usernameRegex.test(username)) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = `<span class="badge badge-success">Valid</span> <strong>${username}</strong> is a valid username.`;
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        
+        let reason = "Invalid characters or length.";
+        if (username.length < 5) reason = "Too short (must be at least 5 characters).";
+        else if (username.length > 15) reason = "Too long (must be at most 15 characters).";
+        else if (/[^a-zA-Z0-9_]/.test(username)) reason = "Contains invalid characters (only alphanumeric & underscores allowed).";
+        
+        resultValue.innerHTML = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid</span> ${reason}`;
+      }
+    }
+  </script>
+</body>
+</html>

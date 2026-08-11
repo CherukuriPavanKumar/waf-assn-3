@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 32 - mouseover Background Changer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .color-btn {
+      padding: 1.5rem 1rem;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: rgba(30, 41, 59, 0.6);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .color-btn:hover {
+      transform: scale(1.05);
+      border-color: white;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body id="pageBody" style="transition: background 0.5s ease, background-color 0.5s ease;">
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 32: Page Color Hover Changer</h1>
+      <p>Change the background color of the webpage when the mouse pointer moves over a button using the mouseover event.</p>
+    </header>
+
+    <div class="card" style="text-align: center;">
+      <h2 class="card-title" style="border-bottom: none;">Hover Over Any Theme Button</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem;">Move your cursor over a button below to dynamically morph the page's background. Move it off to restore the default dark theme.</p>
+      
+      <div class="palette-grid">
+        <button class="color-btn" 
+                style="background: linear-gradient(135deg, #4f46e5, #06b6d4);"
+                onmouseover="setTheme('indigo')" 
+                onmouseout="resetTheme()">
+          Indigo Lagoon
+        </button>
+
+        <button class="color-btn" 
+                style="background: linear-gradient(135deg, #10b981, #059669);"
+                onmouseover="setTheme('emerald')" 
+                onmouseout="resetTheme()">
+          Emerald Forest
+        </button>
+
+        <button class="color-btn" 
+                style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
+                onmouseover="setTheme('sunset')" 
+                onmouseout="resetTheme()">
+          Sunset Fire
+        </button>
+
+        <button class="color-btn" 
+                style="background: linear-gradient(135deg, #ec4899, #8b5cf6);"
+                onmouseover="setTheme('neon')" 
+                onmouseout="resetTheme()">
+          Cyber Violet
+        </button>
+      </div>
+
+      <div class="result-box" style="margin-top: 2rem; border-left-color: var(--accent);">
+        <h3>Active Background State</h3>
+        <div id="statusText" class="result-value" style="font-size: 1.1rem; color: var(--text-muted);">
+          Default Dark Slate Gradient
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const body = document.getElementById('pageBody');
+    const statusText = document.getElementById('statusText');
+
+    // Store original background style to restore it properly
+    const originalBackground = body.style.background || '';
+    const originalBackgroundImage = body.style.backgroundImage || '';
+
+    const themes = {
+      indigo: {
+        bg: 'linear-gradient(at 0% 0%, rgba(79, 70, 229, 0.4) 0px, transparent 50%), linear-gradient(at 100% 100%, rgba(6, 182, 212, 0.4) 0px, transparent 50%)',
+        bgColor: '#070f22',
+        label: 'Indigo Lagoon Theme Active (mouseover)'
+      },
+      emerald: {
+        bg: 'linear-gradient(at 0% 0%, rgba(16, 185, 129, 0.4) 0px, transparent 50%), linear-gradient(at 100% 100%, rgba(5, 150, 105, 0.4) 0px, transparent 50%)',
+        bgColor: '#031c12',
+        label: 'Emerald Forest Theme Active (mouseover)'
+      },
+      sunset: {
+        bg: 'linear-gradient(at 0% 0%, rgba(245, 158, 11, 0.4) 0px, transparent 50%), linear-gradient(at 100% 100%, rgba(239, 68, 68, 0.4) 0px, transparent 50%)',
+        bgColor: '#1e0c06',
+        label: 'Sunset Fire Theme Active (mouseover)'
+      },
+      neon: {
+        bg: 'linear-gradient(at 0% 0%, rgba(236, 72, 153, 0.4) 0px, transparent 50%), linear-gradient(at 100% 100%, rgba(139, 92, 246, 0.4) 0px, transparent 50%)',
+        bgColor: '#1a0b2e',
+        label: 'Cyber Violet Theme Active (mouseover)'
+      }
+    };
+
+    function setTheme(themeKey) {
+      const theme = themes[themeKey];
+      body.style.backgroundColor = theme.bgColor;
+      body.style.backgroundImage = theme.bg;
+      statusText.innerText = theme.label;
+      statusText.style.color = 'var(--text-main)';
+    }
+
+    function resetTheme() {
+      body.style.backgroundColor = 'var(--bg-primary)';
+      body.style.backgroundImage = originalBackgroundImage;
+      statusText.innerText = 'Default Dark Slate Gradient (mouseout)';
+      statusText.style.color = 'var(--text-muted)';
+    }
+  </script>
+</body>
+</html>

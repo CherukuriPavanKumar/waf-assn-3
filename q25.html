@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 25 - Digit Check</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 25: Strict Numbers Checker</h1>
+      <p>Check whether a given string contains only numbers using a Regular Expression.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Enter Text to Check</h2>
+      <div class="form-group">
+        <label for="textInput">Your String:</label>
+        <input type="text" id="textInput" class="form-control" placeholder="Type here..." oninput="checkNumbers()">
+      </div>
+      
+      <div id="resultBox" class="result-box" style="display: none;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function checkNumbers() {
+      const text = document.getElementById('textInput').value;
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      // Matches only digits 0-9
+      const numbersRegex = /^[0-9]+$/;
+      
+      if (text === "") {
+        resultBox.style.display = 'none';
+        return;
+      }
+      
+      resultBox.style.display = 'block';
+      
+      if (numbersRegex.test(text)) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = `<span class="badge badge-success">Numbers Only</span> The string contains only numerical digits.`;
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        resultValue.innerHTML = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid Characters</span> The string contains non-digit characters.`;
+      }
+    }
+  </script>
+</body>
+</html>

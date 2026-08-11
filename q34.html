@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 34 - Paragraph Text Changer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .quote-box {
+      min-height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .quote-text {
+      font-size: 1.15rem;
+      text-align: center;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--text-main);
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 34: Text Changer Event Handler</h1>
+      <p>Change the text of a paragraph when a button is clicked using JavaScript event handling.</p>
+    </header>
+
+    <div class="card" style="text-align: center;">
+      <h2 class="card-title" style="border-bottom: none; margin-bottom: 1.5rem;">Random Programming Quote Generator</h2>
+      
+      <div class="quote-box" id="quoteContainer">
+        <p id="quoteParagraph" class="quote-text">"Click the button below to fetch a new thought."</p>
+      </div>
+
+      <button class="btn" onclick="changeQuoteText()">Generate New Quote</button>
+    </div>
+  </div>
+
+  <script>
+    const quotes = [
+      "\"First, solve the problem. Then, write the code.\" – John Johnson",
+      "\"Java is to JavaScript what car is to Carpet.\" – Chris Heilmann",
+      "\"Clean code always looks like it was written by someone who cares.\" – Michael Feathers",
+      "\"In order to be irreplaceable one must always be different.\" – Coco Chanel",
+      "\"Any fool can write code that a computer can understand. Good programmers write code that humans can understand.\" – Martin Fowler",
+      "\"Make it work, make it right, make it fast.\" – Kent Beck",
+      "\"Programming is the art of telling another human being what one wants the computer to do.\" – Donald Knuth"
+    ];
+
+    let currentIdx = -1;
+
+    function changeQuoteText() {
+      const p = document.getElementById('quoteParagraph');
+      const box = document.getElementById('quoteContainer');
+      
+      // Select a new index (different from the current one)
+      let nextIdx;
+      do {
+        nextIdx = Math.floor(Math.random() * quotes.length);
+      } while (nextIdx === currentIdx);
+      
+      currentIdx = nextIdx;
+
+      // Add a fade effect
+      p.style.opacity = '0';
+      box.style.borderColor = 'var(--accent)';
+      
+      setTimeout(() => {
+        p.innerText = quotes[currentIdx];
+        p.style.opacity = '1';
+        box.style.borderColor = 'var(--border)';
+      }, 200);
+    }
+  </script>
+</body>
+</html>

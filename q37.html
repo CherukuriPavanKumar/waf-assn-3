@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 37 - mouseenter/mouseleave Event</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hover-portal {
+      width: 100%;
+      max-width: 460px;
+      height: 240px;
+      margin: 2rem auto;
+      background: rgba(30, 41, 59, 0.4);
+      border: 2px dashed var(--accent);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    .hover-portal:hover {
+      border-color: #f43f5e;
+      transform: translateY(-4px);
+    }
+    .portal-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+    .hover-portal:hover .portal-icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+    .portal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .portal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+  </style>
+</head>
+<body id="mainBody" style="transition: background 0.6s ease, background-color 0.6s ease;">
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 37: Webpage Color Transitioner</h1>
+      <p>An interactive webpage where the background color changes when the mouse enters a &lt;div&gt; and returns to its original color when the mouse leaves.</p>
+    </header>
+
+    <div class="card" style="text-align: center;">
+      <h2 class="card-title" style="border-bottom: none; margin-bottom: 0;">Interactive Portal</h2>
+      <p style="color: var(--text-muted);">Hover your cursor inside the box below to cross the portal threshold.</p>
+
+      <!-- Hover Zone Div -->
+      <div id="hoverZone" class="hover-portal">
+        <div class="portal-icon" id="portalIcon">&#128640;</div>
+        <div class="portal-title" id="portalTitle">Enter the Portal</div>
+        <div class="portal-desc" id="portalDesc">Move mouse inside to activate color morph.</div>
+      </div>
+
+      <div class="result-box" style="border-left-color: var(--accent); max-width: 460px; margin: 1.5rem auto 0 auto; text-align: left;">
+        <h3>Portal Logging</h3>
+        <div id="portalLog" class="result-value" style="font-size: 1rem; color: var(--text-muted);">
+          System idle. Awaiting cursor...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const body = document.getElementById('mainBody');
+    const hoverZone = document.getElementById('hoverZone');
+    const portalIcon = document.getElementById('portalIcon');
+    const portalTitle = document.getElementById('portalTitle');
+    const portalDesc = document.getElementById('portalDesc');
+    const portalLog = document.getElementById('portalLog');
+
+    // Store original body background
+    const originalBackgroundImage = body.style.backgroundImage || '';
+
+    // Add mouseenter and mouseleave event listeners to the div
+    hoverZone.addEventListener('mouseenter', () => {
+      // 1. Morph page background
+      body.style.backgroundColor = '#1e1b4b'; // Deep rose/indigo tone
+      body.style.backgroundImage = 'radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.3) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.3) 0px, transparent 50%)';
+      
+      // 2. Change interactive div card styling
+      hoverZone.style.background = 'rgba(244, 63, 94, 0.1)';
+      portalIcon.innerHTML = '&#128293;';
+      portalTitle.innerText = "Portal Activated!";
+      portalTitle.style.color = '#f43f5e';
+      portalDesc.innerText = "Mouse is currently inside the div container.";
+      
+      // 3. Update logging info
+      portalLog.innerHTML = `<span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #f43f5e;">mouseenter</span> Background transformed to Rose-Indigo.`;
+    });
+
+    hoverZone.addEventListener('mouseleave', () => {
+      // 1. Reset page background
+      body.style.backgroundColor = 'var(--bg-primary)';
+      body.style.backgroundImage = originalBackgroundImage;
+
+      // 2. Reset interactive div card styling
+      hoverZone.style.background = 'rgba(30, 41, 59, 0.4)';
+      portalIcon.innerHTML = '&#128640;';
+      portalTitle.innerText = "Enter the Portal";
+      portalTitle.style.color = 'var(--text-main)';
+      portalDesc.innerText = "Move mouse inside to activate color morph.";
+
+      // 3. Update logging info
+      portalLog.innerHTML = `<span class="badge">mouseleave</span> Webpage background restored to original colors.`;
+    });
+  </script>
+</body>
+</html>

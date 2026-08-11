@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 26 - Registration Form Validation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .input-wrapper {
+      position: relative;
+    }
+    .validation-msg {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      min-height: 1.1rem;
+      color: var(--text-muted);
+    }
+    .validation-msg.valid {
+      color: var(--success);
+    }
+    .validation-msg.invalid {
+      color: #f87171;
+    }
+    .form-control.is-valid {
+      border-color: var(--success);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+    .form-control.is-invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 26: Form Validator</h1>
+      <p>A registration form containing Name, Email, Mobile, and Password fields validated with Regular Expressions.</p>
+    </header>
+
+    <div class="grid-2">
+      <!-- Input Card -->
+      <div class="card">
+        <h2 class="card-title">Registration Form</h2>
+        <form id="regForm" onsubmit="handleRegistrationSubmit(event)">
+          <div class="form-group">
+            <label for="regName">Name (Alphabets & spaces only):</label>
+            <div class="input-wrapper">
+              <input type="text" id="regName" class="form-control" placeholder="e.g. John Doe" oninput="validateForm()">
+            </div>
+            <div id="msgName" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email Address:</label>
+            <div class="input-wrapper">
+              <input type="text" id="regEmail" class="form-control" placeholder="e.g. john@example.com" oninput="validateForm()">
+            </div>
+            <div id="msgEmail" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="regMobile">Mobile Number (10 digits):</label>
+            <div class="input-wrapper">
+              <input type="text" id="regMobile" class="form-control" placeholder="e.g. 9876543210" maxlength="10" oninput="validateForm()">
+            </div>
+            <div id="msgMobile" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password (Min 8 chars, 1 uppercase, 1 lowercase, 1 digit):</label>
+            <div class="input-wrapper">
+              <input type="password" id="regPassword" class="form-control" placeholder="••••••••" oninput="validateForm()">
+            </div>
+            <div id="msgPassword" class="validation-msg"></div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn" style="width: 100%;" disabled>Register Account</button>
+        </form>
+      </div>
+
+      <!-- Result Card -->
+      <div class="card">
+        <h2 class="card-title">Registration Status</h2>
+        <div id="statusContainer" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 40px); min-height: 200px;">
+          <p style="color: var(--text-muted); text-align: center;">Fill out all fields correctly to enable form submission and display status.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Regular Expressions
+    const regexes = {
+      name: /^[a-zA-Z\s]{2,50}$/,
+      email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      mobile: /^[0-9]{10}$/,
+      password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+    };
+
+    function validateField(inputEl, msgEl, regex, errorMsg) {
+      const val = inputEl.value.trim();
+      if (val === "") {
+        inputEl.classList.remove('is-valid', 'is-invalid');
+        msgEl.innerHTML = "";
+        msgEl.className = "validation-msg";
+        return false;
+      }
+
+      if (regex.test(val)) {
+        inputEl.classList.add('is-valid');
+        inputEl.classList.remove('is-invalid');
+        msgEl.innerHTML = "&#9989; Valid";
+        msgEl.className = "validation-msg valid";
+        return true;
+      } else {
+        inputEl.classList.add('is-invalid');
+        inputEl.classList.remove('is-valid');
+        msgEl.innerHTML = "&#10060; " + errorMsg;
+        msgEl.className = "validation-msg invalid";
+        return false;
+      }
+    }
+
+    function validateForm() {
+      const nameValid = validateField(
+        document.getElementById('regName'),
+        document.getElementById('msgName'),
+        regexes.name,
+        "Name must be alphabets/spaces only, min 2 chars."
+      );
+      
+      const emailValid = validateField(
+        document.getElementById('regEmail'),
+        document.getElementById('msgEmail'),
+        regexes.email,
+        "Please enter a valid email address structure."
+      );
+
+      const mobileValid = validateField(
+        document.getElementById('regMobile'),
+        document.getElementById('msgMobile'),
+        regexes.mobile,
+        "Must be exactly 10 numeric digits."
+      );
+
+      const passwordValid = validateField(
+        document.getElementById('regPassword'),
+        document.getElementById('msgPassword'),
+        regexes.password,
+        "Requires 8+ chars, 1 upper, 1 lower, 1 digit."
+      );
+
+      const submitBtn = document.getElementById('submitBtn');
+      if (nameValid && emailValid && mobileValid && passwordValid) {
+        submitBtn.removeAttribute('disabled');
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+      }
+    }
+
+    function handleRegistrationSubmit(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const mobile = document.getElementById('regMobile').value.trim();
+      
+      const statusContainer = document.getElementById('statusContainer');
+      statusContainer.innerHTML = `
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 8px; padding: 1.5rem;">
+          <h3 style="color: var(--success); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>&#9989;</span> Registration Successful!
+          </h3>
+          <p style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-muted);">
+            Your account request has been successfully validated.
+          </p>
+          <div style="margin-top: 1rem; border-top: 1px dashed var(--border); padding-top: 0.8rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span style="color: var(--text-muted);">Name:</span>
+              <strong>${name}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span style="color: var(--text-muted);">Email:</span>
+              <strong>${email}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Mobile:</span>
+              <strong>${mobile}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

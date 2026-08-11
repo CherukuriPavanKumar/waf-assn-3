@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 31 - onclick Alert Event</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .alert-btn {
+      padding: 1.25rem 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 12px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 31: Button Click Alert Handler</h1>
+      <p>Display an alert message when a button is clicked using the onclick event handler.</p>
+    </header>
+
+    <div class="card" style="text-align: center; padding: 3rem 2rem;">
+      <h2 class="card-title" style="border-bottom: none; margin-bottom: 2rem;">Trigger Native Browser Alert</h2>
+      
+      <button class="btn alert-btn" onclick="showAlert()">
+        Click Me to Alert!
+      </button>
+
+      <div id="toastNotification" class="result-box" style="display: none; max-width: 400px; margin: 2rem auto 0 auto; text-align: left;">
+        <h3>Event Logger</h3>
+        <div class="result-value" style="color: var(--success); font-size: 1.05rem;">
+          &#128394; Alert function was successfully invoked!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showAlert() {
+      // 1. Show the standard browser alert
+      alert("Hello! This is a JavaScript alert dialog triggered by the onclick event!");
+      
+      // 2. Show the on-screen confirmation log
+      const toast = document.getElementById('toastNotification');
+      toast.style.display = 'block';
+      toast.style.borderLeftColor = 'var(--success)';
+    }
+  </script>
+</body>
+</html>

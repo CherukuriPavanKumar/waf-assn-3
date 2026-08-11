@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 38 - Prevent Submit Form Renderer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .receipt-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--border);
+      padding: 0.6rem 0;
+    }
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+    .receipt-label {
+      color: var(--text-muted);
+    }
+    .receipt-val {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 38: Form Submit Interceptor</h1>
+      <p>A form containing Name and Email fields. The submit event is intercepted to prevent page reload, rendering entered values directly on the page.</p>
+    </header>
+
+    <div class="grid-2">
+      <!-- Input Card -->
+      <div class="card">
+        <h2 class="card-title">User Registration</h2>
+        <form id="interceptForm">
+          <div class="form-group">
+            <label for="userName">Name:</label>
+            <input type="text" id="userName" class="form-control" placeholder="e.g. Alice Smith" required>
+          </div>
+
+          <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <input type="email" id="userEmail" class="form-control" placeholder="e.g. alice@example.com" required>
+          </div>
+
+          <button type="submit" class="btn" style="width: 100%;">Submit Form</button>
+        </form>
+      </div>
+
+      <!-- Live Render Card -->
+      <div class="card">
+        <h2 class="card-title">Live Output Render</h2>
+        <div id="renderArea">
+          <p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Submit the form on the left. The values will be rendered here without reloading the webpage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('interceptForm');
+    const renderArea = document.getElementById('renderArea');
+
+    // Add submit event listener
+    form.addEventListener('submit', (event) => {
+      // 1. Prevent form submission (browser reload)
+      event.preventDefault();
+
+      // 2. Fetch input values
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+
+      // 3. Render values dynamically
+      renderArea.innerHTML = `
+        <div class="receipt-card">
+          <h3 style="color: var(--success); font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>&#9889;</span> Submission Intercepted!
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            <code>event.preventDefault()</code> executed. The details below were extracted client-side:
+          </p>
+          
+          <div class="receipt-row">
+            <span class="receipt-label">Name:</span>
+            <span class="receipt-val">${name}</span>
+          </div>
+          
+          <div class="receipt-row">
+            <span class="receipt-label">Email Address:</span>
+            <span class="receipt-val">${email}</span>
+          </div>
+
+          <div class="receipt-row">
+            <span class="receipt-label">Timestamp:</span>
+            <span class="receipt-val" style="font-size: 0.8rem; font-family: monospace;">${new Date().toLocaleTimeString()}</span>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

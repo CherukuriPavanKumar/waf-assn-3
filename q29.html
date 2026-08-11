@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 29 - Form Validation with PIN Code</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .input-wrapper {
+      position: relative;
+    }
+    .validation-msg {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      min-height: 1.1rem;
+      color: var(--text-muted);
+    }
+    .validation-msg.valid {
+      color: var(--success);
+    }
+    .validation-msg.invalid {
+      color: #f87171;
+    }
+    .form-control.is-valid {
+      border-color: var(--success);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+    .form-control.is-invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 29: Form Validator with PIN Code</h1>
+      <p>Develop a JavaScript form-validation program to validate Name, Email, Mobile Number, and PIN Code using suitable Regular Expressions.</p>
+    </header>
+
+    <div class="grid-2">
+      <!-- Input Card -->
+      <div class="card">
+        <h2 class="card-title">Billing Details</h2>
+        <form id="billingForm" onsubmit="handleBillingSubmit(event)">
+          <div class="form-group">
+            <label for="billName">Full Name:</label>
+            <div class="input-wrapper">
+              <input type="text" id="billName" class="form-control" placeholder="e.g. Jane Doe" oninput="validateBillingForm()">
+            </div>
+            <div id="msgName" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="billEmail">Email Address:</label>
+            <div class="input-wrapper">
+              <input type="text" id="billEmail" class="form-control" placeholder="e.g. jane@example.com" oninput="validateBillingForm()">
+            </div>
+            <div id="msgEmail" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="billMobile">Mobile Number:</label>
+            <div class="input-wrapper">
+              <input type="text" id="billMobile" class="form-control" placeholder="e.g. 9876543210" maxlength="10" oninput="validateBillingForm()">
+            </div>
+            <div id="msgMobile" class="validation-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="billPin">PIN Code (6 digits):</label>
+            <div class="input-wrapper">
+              <input type="text" id="billPin" class="form-control" placeholder="e.g. 500001" maxlength="6" oninput="validateBillingForm()">
+            </div>
+            <div id="msgPin" class="validation-msg"></div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn" style="width: 100%;" disabled>Confirm Details</button>
+        </form>
+      </div>
+
+      <!-- Result Card -->
+      <div class="card">
+        <h2 class="card-title">Submission Output</h2>
+        <div id="outputContainer" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 40px); min-height: 200px;">
+          <p style="color: var(--text-muted); text-align: center;">Enter valid inputs in all fields to submit the form and view confirmation output.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Regular Expressions
+    const regexes = {
+      name: /^[a-zA-Z\s]{2,50}$/,
+      email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      mobile: /^[0-9]{10}$/,
+      pin: /^[1-9][0-9]{5}$/ // Standard Indian PIN code (6 digits, doesn't start with 0)
+    };
+
+    function validateField(inputEl, msgEl, regex, errorMsg) {
+      const val = inputEl.value.trim();
+      if (val === "") {
+        inputEl.classList.remove('is-valid', 'is-invalid');
+        msgEl.innerHTML = "";
+        msgEl.className = "validation-msg";
+        return false;
+      }
+
+      if (regex.test(val)) {
+        inputEl.classList.add('is-valid');
+        inputEl.classList.remove('is-invalid');
+        msgEl.innerHTML = "&#9989; Valid";
+        msgEl.className = "validation-msg valid";
+        return true;
+      } else {
+        inputEl.classList.add('is-invalid');
+        inputEl.classList.remove('is-valid');
+        msgEl.innerHTML = "&#10060; " + errorMsg;
+        msgEl.className = "validation-msg invalid";
+        return false;
+      }
+    }
+
+    function validateBillingForm() {
+      const nameValid = validateField(
+        document.getElementById('billName'),
+        document.getElementById('msgName'),
+        regexes.name,
+        "Name must be alphabets/spaces only, min 2 chars."
+      );
+      
+      const emailValid = validateField(
+        document.getElementById('billEmail'),
+        document.getElementById('msgEmail'),
+        regexes.email,
+        "Please enter a valid email structure."
+      );
+
+      const mobileValid = validateField(
+        document.getElementById('billMobile'),
+        document.getElementById('msgMobile'),
+        regexes.mobile,
+        "Must be exactly 10 digits."
+      );
+
+      const pinValid = validateField(
+        document.getElementById('billPin'),
+        document.getElementById('msgPin'),
+        regexes.pin,
+        "Must be a 6-digit PIN code not starting with 0."
+      );
+
+      const submitBtn = document.getElementById('submitBtn');
+      if (nameValid && emailValid && mobileValid && pinValid) {
+        submitBtn.removeAttribute('disabled');
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+      }
+    }
+
+    function handleBillingSubmit(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('billName').value.trim();
+      const email = document.getElementById('billEmail').value.trim();
+      const mobile = document.getElementById('billMobile').value.trim();
+      const pin = document.getElementById('billPin').value.trim();
+      
+      const outputContainer = document.getElementById('outputContainer');
+      outputContainer.innerHTML = `
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 8px; padding: 1.5rem;">
+          <h3 style="color: var(--success); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>&#9989;</span> Details Validated!
+          </h3>
+          <p style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-muted);">
+            The billing information has been processed successfully.
+          </p>
+          <div style="margin-top: 1rem; border-top: 1px dashed var(--border); padding-top: 0.8rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span style="color: var(--text-muted);">Name:</span>
+              <strong>${name}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span style="color: var(--text-muted);">Email:</span>
+              <strong>${email}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span style="color: var(--text-muted);">Mobile:</span>
+              <strong>${mobile}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">PIN Code:</span>
+              <strong>${pin}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

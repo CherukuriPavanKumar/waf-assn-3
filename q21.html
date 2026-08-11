@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 21 - Email Address Validator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 21: Email Address Validator</h1>
+      <p>Validate an email address using a Regular Expression.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Check Your Email</h2>
+      <div class="form-group">
+        <label for="emailInput">Email Address:</label>
+        <input type="text" id="emailInput" class="form-control" placeholder="e.g., example@domain.com">
+      </div>
+      <button class="btn" onclick="validateEmail()" style="width: 100%;">Validate Email</button>
+      
+      <div id="resultBox" class="result-box" style="display: none;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateEmail() {
+      const email = document.getElementById('emailInput').value.trim();
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      // Email Regular Expression
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      
+      resultBox.style.display = 'block';
+      
+      if (email === "") {
+        resultBox.style.borderLeftColor = 'var(--warning)';
+        resultValue.innerHTML = '<span class="badge badge-warning">Empty</span> Please enter an email address.';
+        return;
+      }
+
+      if (emailRegex.test(email)) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = `<span class="badge badge-success">Valid</span> <strong>${email}</strong> is a valid email address structure.`;
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        resultValue.innerHTML = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid</span> <strong>${email}</strong> is not a valid email address structure.`;
+      }
+    }
+  </script>
+</body>
+</html>

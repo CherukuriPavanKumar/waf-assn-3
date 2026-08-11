@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 40 - Character & Word Counter</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .counter-area {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .metrics-panel {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .metrics-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .metric-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .metric-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+    }
+    .metric-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+    .progress-container {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      height: 6px;
+      border-radius: 3px;
+      margin-top: 0.75rem;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--success);
+      transition: width 0.1s ease, background-color 0.15s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 40: Word & Character Counter</h1>
+      <p>A dynamic text area that counts and displays the number of characters and words entered by the user in real-time.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Interactive Input Pad</h2>
+      <div class="form-group" style="margin-bottom: 0.5rem;">
+        <label for="textCounter">Type or paste your content below (Max 300 characters):</label>
+        <textarea id="textCounter" class="form-control counter-area" placeholder="Start typing here..." oninput="updateCounters()"></textarea>
+      </div>
+
+      <!-- Limit Progress Indicator -->
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <!-- Analytics Cards -->
+      <div class="metrics-panel">
+        <div class="metric-card">
+          <div id="charCount" class="metric-num">0</div>
+          <div class="metric-lbl">Characters</div>
+        </div>
+
+        <div class="metric-card">
+          <div id="remainingCount" class="metric-num">300</div>
+          <div class="metric-lbl">Remaining</div>
+        </div>
+
+        <div class="metric-card">
+          <div id="wordCount" class="metric-num">0</div>
+          <div class="metric-lbl">Words</div>
+        </div>
+
+        <div class="metric-card">
+          <div id="sentenceCount" class="metric-num">0</div>
+          <div class="metric-lbl">Sentences</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const maxLength = 300;
+    const textarea = document.getElementById('textCounter');
+    const progressBar = document.getElementById('progressBar');
+    
+    const charDisplay = document.getElementById('charCount');
+    const remainingDisplay = document.getElementById('remainingCount');
+    const wordDisplay = document.getElementById('wordCount');
+    const sentenceDisplay = document.getElementById('sentenceCount');
+
+    function updateCounters() {
+      let content = textarea.value;
+
+      // 1. Enforce length limits client-side
+      if (content.length > maxLength) {
+        textarea.value = content.substring(0, maxLength);
+        content = textarea.value;
+      }
+
+      const totalChars = content.length;
+      const remainingChars = maxLength - totalChars;
+
+      // 2. Count Words
+      const trimmed = content.trim();
+      const words = trimmed === "" ? 0 : trimmed.split(/\s+/).length;
+
+      // 3. Count Sentences
+      const sentences = trimmed === "" ? 0 : trimmed.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+
+      // 4. Update UI displays
+      charDisplay.innerText = totalChars;
+      remainingDisplay.innerText = remainingChars;
+      wordDisplay.innerText = words;
+      sentenceDisplay.innerText = sentences;
+
+      // 5. Update Progress Bar state
+      const percent = (totalChars / maxLength) * 100;
+      progressBar.style.width = `${percent}%`;
+
+      // Change progress bar color based on percentage
+      if (percent < 70) {
+        progressBar.style.backgroundColor = 'var(--success)';
+      } else if (percent < 90) {
+        progressBar.style.backgroundColor = 'var(--warning)';
+      } else {
+        progressBar.style.backgroundColor = 'var(--danger)';
+      }
+    }
+  </script>
+</body>
+</html>

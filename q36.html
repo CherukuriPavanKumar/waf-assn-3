@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 36 - Interactive Counter</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .counter-wrapper {
+      max-width: 320px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+    .count-display {
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: monospace;
+      margin: 1.5rem 0;
+      text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+      transition: all 0.15s ease;
+    }
+    .counter-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .counter-btn {
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 1rem 0;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .history-log {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 36: State Counter</h1>
+      <p>A simple counter with Increment and Decrement buttons. Event handling updates and renders the count state dynamically.</p>
+    </header>
+
+    <div class="card">
+      <div class="counter-wrapper">
+        <h2 class="card-title" style="border-bottom: none; margin-bottom: 0;">Counter Value</h2>
+        <div id="counterValue" class="count-display">0</div>
+        
+        <div class="counter-controls">
+          <button class="btn btn-danger counter-btn" onclick="decrement()">&minus;</button>
+          <button class="btn btn-success counter-btn" onclick="increment()">&#43;</button>
+        </div>
+
+        <button class="btn btn-secondary" onclick="resetCounter()" style="width: 100%; margin-top: 1rem; padding: 0.6rem 0;">Reset</button>
+
+        <div class="history-log" id="historyLog">
+          Last action: Counter initialized.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let count = 0;
+    const counterDisplay = document.getElementById('counterValue');
+    const historyLog = document.getElementById('historyLog');
+
+    function updateCounterDisplay(action) {
+      counterDisplay.innerText = count;
+      
+      // Update color coding based on sign
+      if (count > 0) {
+        counterDisplay.style.color = 'var(--success)';
+        counterDisplay.style.textShadow = '0 0 20px rgba(16, 185, 129, 0.4)';
+      } else if (count < 0) {
+        counterDisplay.style.color = 'var(--danger)';
+        counterDisplay.style.textShadow = '0 0 20px rgba(239, 68, 68, 0.4)';
+      } else {
+        counterDisplay.style.color = 'var(--accent)';
+        counterDisplay.style.textShadow = '0 0 20px rgba(99, 102, 241, 0.4)';
+      }
+
+      historyLog.innerText = `Last action: ${action} (Current: ${count})`;
+    }
+
+    function increment() {
+      count++;
+      updateCounterDisplay("Incremented");
+    }
+
+    function decrement() {
+      count--;
+      updateCounterDisplay("Decremented");
+    }
+
+    function resetCounter() {
+      count = 0;
+      updateCounterDisplay("Reset to zero");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 27 - Strong Password Validator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checklist {
+      margin-top: 1rem;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .checklist-item.valid {
+      color: var(--success);
+    }
+    .checklist-item.invalid {
+      color: #f87171;
+    }
+    .icon {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 27: Strong Password Validator</h1>
+      <p>Validate a password with strict conditions: minimum 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Check Password Strength</h2>
+      <div class="form-group">
+        <label for="passwordInput">Enter Password:</label>
+        <input type="password" id="passwordInput" class="form-control" placeholder="Type password here..." oninput="checkPassword()">
+      </div>
+      <button class="btn" onclick="triggerValidationSubmit()" style="width: 100%;">Verify Password</button>
+      
+      <ul class="checklist">
+        <li id="ruleLength" class="checklist-item"><span class="icon" id="iconLength">&#10060;</span> Minimum 8 characters</li>
+        <li id="ruleUpper" class="checklist-item"><span class="icon" id="iconUpper">&#10060;</span> One uppercase letter (A-Z)</li>
+        <li id="ruleLower" class="checklist-item"><span class="icon" id="iconLower">&#10060;</span> One lowercase letter (a-z)</li>
+        <li id="ruleDigit" class="checklist-item"><span class="icon" id="iconDigit">&#10060;</span> One digit (0-9)</li>
+        <li id="ruleSpecial" class="checklist-item"><span class="icon" id="iconSpecial">&#10060;</span> One special character (e.g. @, #, $, %, etc.)</li>
+      </ul>
+
+      <div id="resultBox" class="result-box" style="display: none; margin-top: 1.5rem;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const pwd = document.getElementById('passwordInput').value;
+      
+      // Validation sub-rules
+      const hasLength = pwd.length >= 8;
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasLower = /[a-z]/.test(pwd);
+      const hasDigit = /\d/.test(pwd);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+      
+      // Helper to update elements
+      updateRuleState('ruleLength', 'iconLength', hasLength);
+      updateRuleState('ruleUpper', 'iconUpper', hasUpper);
+      updateRuleState('ruleLower', 'iconLower', hasLower);
+      updateRuleState('ruleDigit', 'iconDigit', hasDigit);
+      updateRuleState('ruleSpecial', 'iconSpecial', hasSpecial);
+
+      return hasLength && hasUpper && hasLower && hasDigit && hasSpecial;
+    }
+
+    function updateRuleState(elementId, iconId, isValid) {
+      const el = document.getElementById(elementId);
+      const icon = document.getElementById(iconId);
+      if (isValid) {
+        el.classList.add('valid');
+        el.classList.remove('invalid');
+        icon.innerHTML = '&#9989;'; // Green Checkmark
+      } else {
+        el.classList.remove('valid');
+        // Only mark red if user has typed something
+        const pwd = document.getElementById('passwordInput').value;
+        if (pwd.length > 0) {
+          el.classList.add('invalid');
+        } else {
+          el.classList.remove('invalid');
+        }
+        icon.innerHTML = '&#10060;'; // Red X Cross
+      }
+    }
+
+    function triggerValidationSubmit() {
+      const pwd = document.getElementById('passwordInput').value;
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      const isValid = checkPassword();
+      resultBox.style.display = 'block';
+
+      if (pwd === "") {
+        resultBox.style.borderLeftColor = 'var(--warning)';
+        resultValue.innerHTML = '<span class="badge badge-warning">Empty</span> Please type a password first.';
+        return;
+      }
+
+      if (isValid) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = '<span class="badge badge-success">Valid</span> Password meets all strong password criteria.';
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        resultValue.innerHTML = '<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid</span> Password does not meet all strong password criteria.';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 24 - Alphabet Check</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 24: Strict Alphabet Checker</h1>
+      <p>Check whether a given string contains only alphabets using a Regular Expression.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Enter Text to Check</h2>
+      <div class="form-group">
+        <label for="textInput">Your String:</label>
+        <input type="text" id="textInput" class="form-control" placeholder="Type here..." oninput="checkAlphabet()">
+      </div>
+      
+      <div id="resultBox" class="result-box" style="display: none;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function checkAlphabet() {
+      const text = document.getElementById('textInput').value;
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      // Matches only uppercase and lowercase english letters, no spaces or special chars
+      const alphabetRegex = /^[a-zA-Z]+$/;
+      
+      if (text === "") {
+        resultBox.style.display = 'none';
+        return;
+      }
+      
+      resultBox.style.display = 'block';
+      
+      if (alphabetRegex.test(text)) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = `<span class="badge badge-success">Alphabets Only</span> The string contains only alphabetical letters.`;
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        resultValue.innerHTML = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid Characters</span> The string contains non-alphabetic characters (digits, spaces, or special symbols).`;
+      }
+    }
+  </script>
+</body>
+</html>

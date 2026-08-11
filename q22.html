@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 22 - 10-Digit Mobile Number Validator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    
+    <header>
+      <h1>Question 22: 10-Digit Mobile Number Validator</h1>
+      <p>Validate a 10-digit mobile number using a Regular Expression.</p>
+    </header>
+
+    <div class="card">
+      <h2 class="card-title">Check Mobile Number</h2>
+      <div class="form-group">
+        <label for="mobileInput">Mobile Number (10 digits):</label>
+        <input type="text" id="mobileInput" class="form-control" placeholder="e.g., 9876543210" maxlength="15">
+      </div>
+      <button class="btn" onclick="validateMobile()" style="width: 100%;">Validate Mobile Number</button>
+      
+      <div id="resultBox" class="result-box" style="display: none;">
+        <h3>Validation Result</h3>
+        <div id="resultValue" class="result-value"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateMobile() {
+      const mobile = document.getElementById('mobileInput').value.trim();
+      const resultBox = document.getElementById('resultBox');
+      const resultValue = document.getElementById('resultValue');
+      
+      // Strict 10-digit mobile number regex
+      const mobileRegex = /^[0-9]{10}$/;
+      
+      resultBox.style.display = 'block';
+      
+      if (mobile === "") {
+        resultBox.style.borderLeftColor = 'var(--warning)';
+        resultValue.innerHTML = '<span class="badge badge-warning">Empty</span> Please enter a mobile number.';
+        return;
+      }
+
+      if (mobileRegex.test(mobile)) {
+        resultBox.style.borderLeftColor = 'var(--success)';
+        resultValue.innerHTML = `<span class="badge badge-success">Valid</span> <strong>${mobile}</strong> is a valid 10-digit mobile number.`;
+      } else {
+        resultBox.style.borderLeftColor = 'var(--danger)';
+        resultValue.innerHTML = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger)">Invalid</span> <strong>${mobile}</strong> must contain exactly 10 digits (digits 0-9 only). Current length: ${mobile.length}`;
+      }
+    }
+  </script>
+</body>
+</html>
